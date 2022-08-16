@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countries Visited</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <br>
+    <br>
+    <h1>Countries Visited</h1>
+    <br>
+    <br>
+    <div class="btn_container">
+        <button class="filter-btn" data-id="All">All</button>
+
+        <br>
+        <br>
+    </div>
+    <div class="section-center">
+        <div class="country-item">
+            <img src="images/canada.jpeg" alt="Canada" class="photo">
+            <p>Canada</p>
+        </div>
+    </div>
+
+    <script>
+        const countries = [
+
+            {
+                image: 'images/canada.jpeg',
+                name: 'United States',
+                continent: 'North America'
+            },
+
+            {
+                image: 'images/czech.webp',
+                name: 'Czech Republic',
+                continent: 'Europe'
+            },
+
+            {
+                image: 'images/france.jpeg',
+                name: 'France',
+                continent: 'Europe'
+            },
+
+            {
+                image: 'images/germany.png',
+                name: 'Germany',
+                continent: 'Europe'
+            },
+
+            {
+                image: 'images/laos.webp',
+                name: 'Laos',
+                continent: 'Asia'
+            },
+
+            {
+                image: 'images/morocco.webp',
+                name: 'Morocco',
+                continent: 'Africa'
+            },
+
+            {
+                image: 'images/netherlands.jpeg',
+                name: 'Netherlands',
+                continent: 'Europe'
+            },
+
+            {
+                image: 'images/portugal.webp',
+                name: 'Portugal',
+                continent: 'Europe'
+            },
+
+            {
+                image: 'images/qatar.webp',
+                name: 'Qatar',
+                continent: 'Asia'
+            },
+
+            {
+                image: 'images/scotland.webp',
+                name: 'Scotland',
+                continent: 'Europe'
+            },
+
+            {
+                image: 'images/spain.png',
+                name: 'Spain',
+                continent: 'Europe'
+            },
+
+            {
+                image: 'images/thailand.jpeg',
+                name: 'Thailand',
+                continent: 'Asia'
+            },
+
+            {
+                image: 'images/uk.webp',
+                name: 'United Kingdom',
+                continent: 'Europe'
+            },
+
+            {
+                image: 'images/us.webp',
+                name: 'United States',
+                continent: 'North America'
+            }
+
+        ]
+
+        const sectionCenter = document.querySelector('.section-center');
+        const btnContainer = document.querySelector('.btn_container');
+
+        window.addEventListener('DOMContentLoaded', function () {
+            displayCountries(countries);
+            displayMenuButtons();
+        })
+
+
+
+
+
+        function displayCountries(array) {
+            let countriesMap = array.map(function (item) {
+                return `        <div class="country-item">
+            <img src="${item.image}" alt="${item.name}" class="photo">
+            <p>${item.name}</p>
+        </div>`
+            })
+            countriesMap = countriesMap.join('');
+            sectionCenter.innerHTML = countriesMap;
+        }
+
+        function displayMenuButtons() {
+            const continents = countries.reduce(function (values, item) {
+                if (!values.includes(item.continent)) {
+                    values.push(item.continent)
+                }
+                return values;
+            },
+                ['All']
+            );
+
+            const continentBtns = continents.map(function (item) {
+                return `<button class="filter-btn" data-id="${item}">${item}</button>`
+            }).join('');
+
+            btnContainer.innerHTML = continentBtns;
+
+            const filterBtns = btnContainer.querySelectorAll('.filter-btn');
+
+            filterBtns.forEach(function (btn) {
+                btn.addEventListener('click', function (e) {
+                    let continent = e.currentTarget.dataset.id;
+                    let countriesFilter = countries.filter(function (item) {
+                        if (item.continent === continent) {
+                            return item;
+                        }
+                    })
+                    if (continent === 'All') {
+                        displayCountries(countries);
+                    } else {
+                        displayCountries(countriesFilter);
+                    }
+                })
+            })
+
+        }
+
+    </script>
+
+</body>
+
+</html>
